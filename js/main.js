@@ -57,41 +57,44 @@ box.classList.add("box")
 const board = document.querySelector("#board")
 
 
-
 let nb = 1
 let joueur = prompt("Nombre de Box au départ pour commencer a jouer");
 if(joueur !=null){
-
-
-for (let i = 1; i <= joueur; i++) {
-    const newbox = box.cloneNode();
-    newbox.innerText = i;
-    board.appendChild(newbox); //ajoute une box au conteneur (board)
-
-    newbox.addEventListener("click", function(){
-        if(i == nb){
-            newbox.classList.add("box-valid")
-            if(nb == board.children.length){
-                board.querySelectorAll(".box").forEach(function(box){
-                    showReaction("succes",box)
-                })
-            }
-            nb++
-
+    
+    // newbox.addEventListener("click", updateTime()); //sencé lancer le chrono............
+    
+    for (let i = 1; i <= joueur; i++) {
+        const newbox = box.cloneNode();
+        newbox.innerText = i;
+        board.appendChild(newbox); //ajoute une box au conteneur (board)
+        
+        newbox.addEventListener("click", function(){
+            if(i == nb){
+                newbox.classList.add("box-valid")
+                shuffleChildren(board)
+                if(nb == board.children.length){
+                    board.querySelectorAll(".box").forEach(function(box){
+                        showReaction("succes",box)
+                    })
+                    
+                }
+                nb++
                 
+                
+            }
+            else if (i > nb){
+                showReaction ("error", newbox)
+                nb = 1
+                board.querySelectorAll(".box-valid").forEach(function(valideBox){valideBox.classList.remove("box-valid")
+            })
+            shuffleChildren(board)
         }
-        else if (i > nb){
-            showReaction ("error", newbox)
-            nb = 1
-            board.querySelectorAll(".box-valid").forEach(function(valideBox){valideBox.classList.remove("box-valid")
-        })
-        }
-
+        
         else{
             showReaction("notice",newbox)
         }
     })
-
+    
 }
 }
 
@@ -100,6 +103,50 @@ shuffleChildren(board)
 
 
 
+//chrono
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
 
+function updateTime() {
+    seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
 
+        let displayHours;
+        if (hours < 10) {
+            displayHours = "0" + hours;
+        } else {
+            displayHours = hours;
+        }
+        
+        let displayMinutes;
+        if (minutes < 10) {
+            displayMinutes = "0" + minutes;
+        } else {
+            displayMinutes = minutes;
+        }
+        
+        let displaySeconds;
+        if (seconds < 10) {
+            displaySeconds = "0" + seconds;
+        } else {
+            displaySeconds = seconds;
+        }
 
+        document.getElementById("chrono").textContent = displayHours + ":" + displayMinutes + ":" + displaySeconds;
+    }
+
+    
+    
+
+    
+    
+    
+    // newbox.addEventListener("click", updateTime());
