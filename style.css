@@ -35,3 +35,20 @@
     color: #aaa;
     transform: scale(0.8);
 }
+
+
+.box.succes{
+    
+    background-color: rgb(128, 236, 128);
+    color: green;
+}
+
+.box.error{
+    background-color: rgb(231, 128, 128);
+    color: red;
+}
+
+.box.notice {
+    background-color: rgb(105, 105, 238);
+    color: blue;
+}
